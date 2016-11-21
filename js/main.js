@@ -1,17 +1,30 @@
 var myThings = [
-  { sono: '1112', text: 'myItem one9'},
-  { sono: '1113', text: 'my item two9'},
-  { sono: '1114', text: 'another item9'}
+  { sono: '1112', custno: 'myItem one9', shipvia: '1myItem one9'},
+  { sono: '1113', custno: 'my item two9', shipvia: '1myItem one9'},
+  { sono: '1114', custno: 'another item9', shipvia: '1myItem one9'}
 ];
 
 Vue.component('sono-item', {
-  props: ['sono'],
-  template: '<li><strong>{{sono.sono}}</strong>  {{ sono.text }}</li>'
+  props: {
+    data: Array
+  },
+  template: '#grid-template',
+  computed: {
+    columns: function () {
+      var keys = [];
+      for(var key in this.data[0]) {
+        if (this.data[0].hasOwnProperty(key)) {
+          keys.push(key);
+        }
+      }
+      return keys
+    }
+  }
 })
 
-var app4 = new Vue({
+var app = new Vue({
   el: '#so-list',
   data: {
-    sonoItems: myThings
+    soData: myThings
   }
 });

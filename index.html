@@ -1,15 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
+  <!-- component template -->
+  <script type="text/x-template" id="grid-template">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="" v-for="key in columns">
+            <strong>
+              {{key}}
+            </strong>
+          </td>
+        </tr>
+      </thead>
+      <tbody class="">
+        <tr v-for="entry in data">
+          <td v-for="key in columns">
+            {{entry[key]}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </script>
+
   <head>
-      <script src="./js/vue.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="./js/vue.js"></script>
   </head>
+
   <body>
-    <div id="so-list">
-      <ol>
-        <sono-item v-for="so in sonoItems" v-bind:sono="so"></sono-item>
-      </ol>
+    <div class="container">
+        <div id="so-list">
+          <sono-item
+            :data="soData">
+          </sono-item>
+        </div>
     </div>
 
     <script src="./js/main.js"></script>
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
   </body>
+
 </html>
