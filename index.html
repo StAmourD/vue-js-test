@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <!-- component template -->
-  <script type="text/x-template" id="grid-template">
-    <table class="table table-striped table-bordered table-hover">
-      <thead>
-        <tr>
-          <td class="" v-for="key in columns">
-            <strong>
+<!-- component template -->
+<script type="text/x-template" id="grid-template">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="" v-for="key in columns">
+          <strong>
               {{key}}
             </strong>
-          </td>
-        </tr>
-      </thead>
-      <tbody class="">
-        <tr v-for="entry in data">
-          <td v-for="key in columns">
-            {{entry[key]}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </script>
+        </td>
+      </tr>
+    </thead>
+    <tbody class="">
+      <tr v-for="entry in data">
+        <td v-for="key in columns">
+          {{entry[key]}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</script>
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <script src="./js/vue.js"></script>
-  </head>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <script src="./js/vue.js"></script>
+  <title>Home</title>
+</head>
 
-  <body>
-    <div class="container">
-        <div id="so-list">
-          <sono-item
-            :data="soData">
-          </sono-item>
-        </div>
+<body>
+  <div class="container">
+    <!-- <div id="refresh-btn">
+      <button class="btn btn-primary" v-on:click="refreshGrid1">Refresh</button>
+    </div> -->
+    <div id="so-list">
+      <button class="btn btn-primary" v-on:click="refreshGrid">Refresh</button>
+      <sono-item :data="soData">
+      </sono-item>
     </div>
+  </div>
 
-    <script src="./js/main.js"></script>
-    <script type="text/javascript" src="./js/jquery.min.js"></script>
-    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
-  </body>
+  <script src="./js/main.js"></script>
+  <script type="text/javascript" src="./js/jquery.min.js"></script>
+  <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+</body>
 
 </html>

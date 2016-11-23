@@ -47,9 +47,29 @@ Vue.component('sono-item', {
     }
 });
 
-var app = new Vue({
+var Grid = new Vue({
     el: '#so-list',
     data: {
         soData: myThings
+    },
+    methods: {
+        refreshGrid: function() {
+            Grid.soData.push({
+                sono: '777',
+                shipvia: 'NONE'
+            });
+        }
     }
 });
+
+// var Button = new Vue({
+//     el: '#refresh-btn',
+//     methods: {
+//         refreshGrid1: function() {
+//             Grid.soData.push({
+//                 sono: '777',
+//                 shipvia: 'NONE'
+//             });
+//         }
+//     }
+// });
