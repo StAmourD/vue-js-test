@@ -28,9 +28,9 @@
           $end = $_GET['EndDate'];
           if (strlen($start) > 0 && strlen($end) > 0) {
               if (isset($_GET['UseAddDate']) && $_GET['UseAddDate'] == 'true') {
-                  $where .= " AND a.adddate BETWEEN CTOD('$start') AND CTOD('$end')";
+                  $where .= " AND somast.adddate BETWEEN CTOD('$start') AND CTOD('$end')";
               } else {
-                  $where .= " AND a.ordate BETWEEN CTOD('$start') AND CTOD('$end')";
+                  $where .= " AND somast.ordate BETWEEN CTOD('$start') AND CTOD('$end')";
               }
           }
       }

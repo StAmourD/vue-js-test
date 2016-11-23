@@ -32,6 +32,7 @@ class ADODB
      *   The 1st dimension is an index number
      *   The 2nd is an associative array, the key is the field name, the value is the field value for that row
      * DS 7.27.16
+     * TESTING: http://localhost/vue-js-test/php/GetSOList.php?StartDate=8-22-2016&EndDate=9-6-2016
      */
     public function GetRows($ThisSQL, $where_append = '')
     {
@@ -42,7 +43,8 @@ class ADODB
             return array('Error' => 'Not a select statement: '.$ThisSQL);
         }
         $rs = new COM('ADODB.recordset');
-        $rs = $this->db->Execute($ThisSQL.$where_append);
+        $ThisSQL = str_replace('#where', $where_append, $ThisSQL);
+        $rs = $this->db->Execute($ThisSQL);
         $MyArr = array();
         $RowNum = 0;
         while (!$rs->EOF) {
