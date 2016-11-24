@@ -3,7 +3,7 @@
 
 <!-- component template -->
 <script type="text/x-template" id="grid-template">
-  <table class="table table-striped table-bordered table-hover">
+  <table class="table table-striped table-bordered table-hover table-responsive" v-if="data.length > 0">
     <thead>
       <tr>
         <td class="" v-for="key in columns">
@@ -31,6 +31,11 @@
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <script src="./js/vue.js"></script>
   <title>Home</title>
+  <style>
+    table {
+      margin: 0 auto
+    }
+  </style>
 </head>
 
 <body>
@@ -40,7 +45,7 @@
     </div> -->
     <div id="so-list">
       <button class="btn btn-primary" v-on:click="refreshGrid">Refresh</button>
-      <sono-item :data="soData">
+      <sono-item :data="soData" :selectedcolumns="soColumns">
       </sono-item>
     </div>
   </div>
