@@ -4,7 +4,7 @@ SELECT alltrim(somast.tracking) AS tracking,
        alltrim(somast.sono) + ' ' + somast.maint AS sono,
        somast.ordate AS reqdate,
        skdcnt.nomax0,
-       skdcnt.estskidcnt,
+       round(skdcnt.estskidcnt, 2) AS estskidcnt,
        somast.reqtime,
        somast.shipvia,
        somast.sotype

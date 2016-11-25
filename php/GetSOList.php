@@ -3,10 +3,6 @@
   $where = '';
 
   if (isset($_GET['StartDate']) && isset($_GET['EndDate'])) {
-      $UseDateFilter = true;
-      $UseLocationFilter = isset($_GET['Warehouse']) && strlen(isset($_GET['Warehouse'])) > 0;
-      $ThisData = GatherPOData('.\\sql\\get-so-data.sql', $UseDateFilter, $UseLocationFilter);
-      echo json_encode($ThisData);
       // $RetData = array();
       // foreach ($ThisData as $key => $value) {
       //     $NewKey = trim($value['sono']);
@@ -16,14 +12,7 @@
       //     // echo'<PRE>';
       //     // echo print_r($RetData);
       // }
-  } else {
-      die('Nothing to see here: Missing parameters.');
-  }
-
-  function GatherPOData($SQLFileName, $UseDateFilter, $UseWarehouseFilter)
-  {
-      $where = '';
-      if ($UseDateFilter) {
+      if (isset($_GET['StartDate']) && isset($_GET['EndDate'])) {
           $start = $_GET['StartDate'];
           $end = $_GET['EndDate'];
           if (strlen($start) > 0 && strlen($end) > 0) {
@@ -34,16 +23,43 @@
               }
           }
       }
-      if ($UseWarehouseFilter) {
-          $location = $_GET['Warehouse'];
-          $where .= " AND ALLTRIM(a.loctid) IN ($location)";
+  }
+  $ThisData = GatherSOData('.\\sql\\get-so-data.sql');
+  foreach ($ThisData as $key => $value) {
+      if (isset($value['tracking']) && strlen($value['tracking']) > 0) {
+          $ThisData[$key]['load'] = GetLoadNumber($value['tracking']);
       }
-      if (isset($_GET['FilterNonRPS']) && $_GET['FilterNonRPS'] == 'true') {
-          $where .= " AND ALLTRIM(a.tosw)=''";
-      }
+  }
+  echo json_encode($ThisData);
 
+  function GatherSOData($SQLFileName)
+  {
+      global $where;
       $db = new ADODB();
       $ThisData = $db->GetRows($SQLFileName, $where);
 
       return $ThisData;
+  }
+
+  function GetLoadNumber($tracking)
+  {
+      $RetValue = '';
+      $loadno = 'loadno';
+      $commaSplit = explode(',', $tracking);
+      foreach ($commaSplit as $key => $value) {
+          $semiSplit = explode(';', $value);
+          if (count($semiSplit) == 4) {
+              if (strpos(';LOAD', $semiSplit[3]) > 0) {
+                  // 0 = sono and version
+                  // 1 = load number
+                  // 2 = load status
+                  // 3 = track-type (we're looking for load here)
+                  $RetValue = $semiSplit[1].', '.$semiSplit[2];
+
+                  // TODO find a way to retun the load staus here
+              }
+          }
+      }
+
+      return $RetValue;
   }
