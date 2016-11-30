@@ -3,7 +3,7 @@
 
 <!-- component template -->
 <script type="text/x-template" id="grid-template">
-  <table class="table table-striped table-bordered table-hover table-responsive" v-if="data.length > 0">
+  <table class="table table-striped table-bordered table-responsive" v-if="data.length > 0">
     <thead>
       <tr>
         <td class="" v-for="key in columns">
@@ -16,7 +16,21 @@
     <tbody class="">
       <tr v-for="entry in data">
         <td v-for="key in columns">
-          {{entry[key]}}
+          <!-- <span v-if="key === 'sotype' && entry.sotype === 'R'" class="label label-danger">Return</span> -->
+          <div v-if="key === 'sono'">
+            {{entry[key]}}</br>
+            <span v-if="entry.sotype === 'R'" class="label label-danger">Return</span>
+            <span v-if="entry.loadstatus === 'ONROAD'" class="label label-primary">On the road</span>
+            <span v-else-if="entry.loadstatus === 'LOADING'" class="label label-info">Loading now...</span>
+            <span v-else-if="entry.loadstatus === 'LOADED'" class="label label-success">Loaded</span>
+            <span v-else class="label label-warning">Unassigned</span>
+          </div>
+          <div v-else-if="key === 'load'">
+            {{entry[key]}}</br>
+          </div>
+          <div v-else>
+            {{entry[key]}}</br>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -28,8 +42,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
   <script src="./js/vue.js"></script>
+  <link rel="stylesheet" href="./css/bootstrap.css">
   <title>Home</title>
   <style>
     table {
@@ -40,19 +54,17 @@
 
 <body>
   <div class="container">
-    <!-- <div id="refresh-btn">
-      <button class="btn btn-primary" v-on:click="refreshGrid1">Refresh</button>
-    </div> -->
     <div id="so-list">
       <button class="btn btn-primary" v-on:click="refreshGrid">Refresh</button>
-      <sono-item :data="soData" :selectedcolumns="soColumns">
-      </sono-item>
+
+      <sono-list :data="soData" :selectedcolumns="soColumns">
+      </sono-list>
     </div>
   </div>
 
-  <script src="./js/main.js"></script>
   <script type="text/javascript" src="./js/jquery.min.js"></script>
   <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+  <script src="./js/main.js"></script>
 </body>
 
 </html>
