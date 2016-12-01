@@ -25,7 +25,7 @@ Vue.component('sono-list', {
     }
 });
 
-var MyColumns = ['sono', 'customercode', 'shipto', 'reqdate', 'reqtime', 'estskidcnt', 'shipvia', 'sotype', 'load'];
+var MyColumns = ['sono', 'customercode', 'shipto', 'reqdate', 'reqtime', 'estskidcnt', 'shipvia', 'load'];
 var Grid = new Vue({
     el: '#so-list',
     data: {

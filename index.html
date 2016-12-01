@@ -18,15 +18,21 @@
         <td v-for="key in columns">
           <!-- <span v-if="key === 'sotype' && entry.sotype === 'R'" class="label label-danger">Return</span> -->
           <div v-if="key === 'sono'">
-            {{entry[key]}}</br>
-            <span v-if="entry.sotype === 'R'" class="label label-danger">Return</span>
-            <span v-if="entry.loadstatus === 'ONROAD'" class="label label-primary">On the road</span>
-            <span v-else-if="entry.loadstatus === 'LOADING'" class="label label-info">Loading now...</span>
-            <span v-else-if="entry.loadstatus === 'LOADED'" class="label label-success">Loaded</span>
-            <span v-else class="label label-warning">Unassigned</span>
+            {{entry[key]}}
+            <span v-if="entry.sotype === 'R'" class="label label-danger pull-right">Return</span>
+            <span v-else-if="entry.sotype === 'O'" class="label label-default pull-right">Back Order</span>
+            </br>
           </div>
           <div v-else-if="key === 'load'">
-            {{entry[key]}}</br>
+            {{entry[key]}}
+            <span v-if="entry.loadstatus === 'ONROAD'" class="label label-primary pull-right">On the road</span>
+            <span v-else-if="entry.loadstatus === 'LOADING'" class="label label-info pull-right">Loading now...</span>
+            <span v-else-if="entry.loadstatus === 'LOADED'" class="label label-success pull-right">Loaded</span>
+            <span v-else class="label label-warning pull-right">Unassigned</span>
+          </div>
+          <!-- Math.abs -->
+          <div v-else-if="key === 'estskidcnt'">
+            {{Math.abs(entry[key])}}
           </div>
           <div v-else>
             {{entry[key]}}</br>
