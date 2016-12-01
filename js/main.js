@@ -25,12 +25,17 @@ Vue.component('sono-list', {
     }
 });
 
+Vue.component('settings', {
+    template: '#modal-settings'
+});
+
 var MyColumns = ['sono', 'customercode', 'shipto', 'reqdate', 'reqtime', 'estskidcnt', 'shipvia', 'load'];
 var Grid = new Vue({
     el: '#so-list',
     data: {
         soData: soList,
-        soColumns: MyColumns
+        soColumns: MyColumns,
+        showModal: false
     },
     methods: {
         refreshGrid: function() {

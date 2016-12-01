@@ -43,6 +43,35 @@
   </table>
 </script>
 
+<!-- template for the modal component -->
+<script type="text/x-template" id="modal-settings">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <slot name="header">
+              <h3 slot="header">Settings</h3>
+            </slot>
+          </div>
+          <div class="modal-body">
+            <slot name="body">
+              default body
+            </slot>
+          </div>
+          <div class="modal-footer">
+            <slot name="footer">
+              <button class="btn btn-default pull-right" @click="$emit('close')">
+                OK
+              </button>
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,6 +79,7 @@
 
   <script src="./js/vue.js"></script>
   <link rel="stylesheet" href="./css/bootstrap.css">
+  <link rel="stylesheet" href="./css/modal.css">
   <title>Home</title>
   <style>
     table {
@@ -62,7 +92,9 @@
   <div class="container">
     <div id="so-list">
       <button class="btn btn-primary" v-on:click="refreshGrid">Refresh</button>
-
+      <button id="show-modal" class="btn btn-info" @click="showModal = true">Show Modal</button>
+      <settings v-if="showModal" @close="showModal = false">
+      </settings>
       <sono-list :data="soData" :selectedcolumns="soColumns">
       </sono-list>
     </div>
