@@ -20,7 +20,7 @@
 <body>
   <div class="container">
     <div id="app">
-      <currency-input label="Price" v-on:input="select" v-bind:checked="pchecked" v-bind:test="price"></currency-input>
+      <currency-input label="Price" v-on:input="select" v-on:input2="select2" v-bind:checked="pchecked" v-bind:test="price"></currency-input>
       <p>price: ${{ price }}</p>
       <p>pchecked: ${{ pchecked }}</p>
     </div>
