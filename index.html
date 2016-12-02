@@ -1,77 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- component template -->
-<script type="text/x-template" id="grid-template">
-  <table class="table table-striped table-bordered table-responsive" v-if="data.length > 0">
-    <thead>
-      <tr>
-        <td class="" v-for="key in columns">
-          <strong>
-              {{key}}
-            </strong>
-        </td>
-      </tr>
-    </thead>
-    <tbody class="">
-      <tr v-for="entry in data">
-        <td v-for="key in columns">
-          <!-- <span v-if="key === 'sotype' && entry.sotype === 'R'" class="label label-danger">Return</span> -->
-          <div v-if="key === 'sono'">
-            {{entry[key]}}
-            <span v-if="entry.sotype === 'R'" class="label label-danger pull-right">Return</span>
-            <span v-else-if="entry.sotype === 'O'" class="label label-default pull-right">Back Order</span>
-            </br>
-          </div>
-          <div v-else-if="key === 'load'">
-            {{entry[key]}}
-            <span v-if="entry.loadstatus === 'ONROAD'" class="label label-primary pull-right">On the road</span>
-            <span v-else-if="entry.loadstatus === 'LOADING'" class="label label-info pull-right">Loading now...</span>
-            <span v-else-if="entry.loadstatus === 'LOADED'" class="label label-success pull-right">Loaded</span>
-            <span v-else class="label label-warning pull-right">Unassigned</span>
-          </div>
-          <!-- Math.abs -->
-          <div v-else-if="key === 'estskidcnt'">
-            {{Math.abs(entry[key])}}
-          </div>
-          <div v-else>
-            {{entry[key]}}</br>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</script>
-
-<!-- template for the modal component -->
-<script type="text/x-template" id="modal-settings">
-  <transition name="modal">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-header">
-            <slot name="header">
-              <h3 slot="header">Settings</h3>
-            </slot>
-          </div>
-          <div class="modal-body">
-            <slot name="body">
-              default body
-            </slot>
-          </div>
-          <div class="modal-footer">
-            <slot name="footer">
-              <button class="btn btn-default pull-right" @click="$emit('close')">
-                OK
-              </button>
-            </slot>
-          </div>
-        </div>
-      </div>
-    </div>
-  </transition>
-</script>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,13 +19,10 @@
 
 <body>
   <div class="container">
-    <div id="so-list">
-      <button class="btn btn-primary" v-on:click="refreshGrid">Refresh</button>
-      <button id="show-modal" class="btn btn-info" @click="showModal = true">Show Modal</button>
-      <settings v-if="showModal" @close="showModal = false">
-      </settings>
-      <sono-list :data="soData" :selectedcolumns="soColumns">
-      </sono-list>
+    <div id="app">
+      <currency-input label="Price" v-on:input="select" v-bind:checked="pchecked" v-bind:test="price"></currency-input>
+      <p>price: ${{ price }}</p>
+      <p>pchecked: ${{ pchecked }}</p>
     </div>
   </div>
 

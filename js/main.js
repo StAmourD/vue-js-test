@@ -1,70 +1,35 @@
-var soList;
-soList = [];
-
-Vue.component('sono-list', {
-    props: {
-        data: Array,
-        selectedcolumns: Array
-    },
-    template: '#grid-template',
+Vue.component('currency-input', {
+    // <input v-bind:value="value" v-on:input="updateValue($event.target.value)" >
+    template: '<div>' +
+        '<input type="checkbox" v-bind:value="test" v-on:change="updateValue" v-bind:checked="isChecked">' +
+        '<p>child: {{checked}}</p><p>test: {{test}}</p></div>',
+    props: ['checked', 'test'],
     computed: {
-        columns: function() {
-            // return specified list if it is supplied
-            if (Array.isArray(this.selectedcolumns)) {
-                return this.selectedcolumns;
-            }
-            // otherwise show all keys
-            var keys = [];
-            for (var key in this.data[0]) {
-                if (this.data[0].hasOwnProperty(key)) {
-                    keys.push(key);
-                }
-            }
-            return keys;
+        isChecked: function() {
+            return this.checked;
+        },
+        isTest: function() {
+            return this.test;
         }
-    }
-});
-
-Vue.component('settings', {
-    template: '#modal-settings'
-});
-
-var MyColumns = ['sono', 'customercode', 'shipto', 'reqdate', 'reqtime', 'estskidcnt', 'shipvia', 'load'];
-var Grid = new Vue({
-    el: '#so-list',
-    data: {
-        soData: soList,
-        soColumns: MyColumns,
-        showModal: false
     },
     methods: {
-        refreshGrid: function() {
-            $.ajax({
-                    url: './php/GetSOList.php',
-                    data: {}
-                })
-                .done(function(data) {
-                    console.log("success");
-                    Grid.soData = $.parseJSON(data);
-                    // Grid.refreshTime = 'hey';
-                })
-                .fail(function() {
-                    console.log("error");
-                });
-
-        },
-        returnOnly: function(value) {
-            value.filter(function(value) {
-                return true;
-            });
-            // return value.sotype == 'R' ? true : false;
-            // return value.filter(function(number) {
-            //     return number % 2 === 0;
-            // });
+        updateValue: function(value) {
+            this.$emit('input', value);
         }
     }
 });
 
-$(document).ready(function() {
-    Grid.refreshGrid();
+var app;
+app = new Vue({
+    el: '#app',
+    data: {
+        price: 10,
+        pchecked: true
+    },
+    methods: {
+        select: function(e) {
+            // alert(e.target.checked);
+            this.pchecked = e.target.checked;
+        }
+    }
 });
