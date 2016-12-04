@@ -27,7 +27,7 @@
   $ThisData = GatherSOData('.\\sql\\get-so-data.sql');
   foreach ($ThisData as $key => $value) {
       if (isset($value['tracking']) && strlen($value['tracking']) > 0) {
-          $ThisData[$key]['load'] = GetLoadNumber($value['tracking']);
+          list($ThisData[$key]['load'], $ThisData[$key]['loadstatus']) = GetLoadNumber($value['tracking']);
       }
   }
   echo json_encode($ThisData);
@@ -43,8 +43,7 @@
 
   function GetLoadNumber($tracking)
   {
-      $RetValue = '';
-      $loadno = 'loadno';
+      $RetValue = array('', '');
       $commaSplit = explode(',', $tracking);
       foreach ($commaSplit as $key => $value) {
           $semiSplit = explode(';', $value);
@@ -54,7 +53,7 @@
                   // 1 = load number
                   // 2 = load status
                   // 3 = track-type (we're looking for load here)
-                  $RetValue = $semiSplit[1].', '.$semiSplit[2];
+                  $RetValue = array($semiSplit[1], $semiSplit[2]);
 
                   // TODO find a way to retun the load staus here
               }

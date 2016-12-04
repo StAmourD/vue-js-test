@@ -1,49 +1,40 @@
-var soList;
-soList = [];
-
-Vue.component('sono-item', {
-    props: {
-        data: Array,
-        selectedcolumns: Array
-    },
-    template: '#grid-template',
+Vue.component('currency-input', {
+    // <input v-bind:value="value" v-on:input="updateValue($event.target.value)" >
+    template: '<div>' +
+        '<input type="checkbox" v-bind:value="test" v-on:change="updateValue" v-bind:checked="isChecked">' +
+        '<input type="checkbox" value="test111" v-on:change="updateValue2" v-bind:checked="isChecked">' +
+        '<p>child: {{checked}}</p><p>test: {{test}}</p></div>',
+    props: ['checked', 'test'],
     computed: {
-        columns: function() {
-            if (Array.isArray(this.selectedcolumns)) {
-                return this.selectedcolumns;
-            }
-            var keys = [];
-            for (var key in this.data[0]) {
-                if (this.data[0].hasOwnProperty(key)) {
-                    keys.push(key);
-                }
-            }
-            return keys;
+        isChecked: function() {
+            return this.checked;
+        }
+    },
+    methods: {
+        updateValue: function(value) {
+            this.$emit('input', value);
+        },
+        updateValue2: function(value) {
+            this.$emit('input2', value);
         }
     }
 });
 
-var MyColumns = ['sono', 'customercode', 'shipto', 'reqdate', 'reqtime', 'estskidcnt', 'reqtime', 'shipvia', 'sotype', 'load'];
-var Grid = new Vue({
-    el: '#so-list',
+var app;
+app = new Vue({
+    el: '#app',
     data: {
-        soData: soList,
-        soColumns: MyColumns
+        price: 10,
+        pchecked: true
     },
     methods: {
-        refreshGrid: function() {
-            $.ajax({
-                    url: './php/GetSOList.php',
-                    data: {}
-                })
-                .done(function(data) {
-                    console.log("success");
-                    Grid.soData = $.parseJSON(data);
-                })
-                .fail(function() {
-                    console.log("error");
-                });
-
+        select: function(e) {
+            // alert(e.target.checked);
+            this.pchecked = e.target.checked;
+        },
+        select2: function(e) {
+            alert(e.target.checked + 'other box');
+            // this.pchecked = e.target.checked;
         }
     }
 });
