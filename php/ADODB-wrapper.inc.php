@@ -11,7 +11,9 @@ class ADODB
     {
         $this->db = new COM('ADODB.Connection');
         // check server info to see if we are in TEST CTEST or LIVE
-        if (substr_count($_SERVER['SERVER_NAME'], 'localhost') > 0) {
+        if (isset($_SERVER['VFP_PRO_CONNECTION_STRING'])) {
+          $this->db->Open($_SERVER['VFP_PRO_CONNECTION_STRING']);
+        } elseif (substr_count($_SERVER['SERVER_NAME'], 'localhost') > 0) {
             $this->db->Open(self::CONNECTION_STRING_CTEST);
         } else {
             $this->db->Open(self::CONNECTION_STRING_LIVE);
